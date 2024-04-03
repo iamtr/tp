@@ -41,6 +41,15 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            if (index.getZeroBased() < 0) {
+                throw new ParseException(EditCommand.MESSAGE_INDEX_LESS_THAN_ONE);
+            }
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(EditCommand.MESSAGE_INDEX_LESS_THAN_ONE));
+        }
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
